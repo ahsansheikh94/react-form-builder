@@ -2,17 +2,22 @@ import React, { useEffect, useState } from "react";
 import { Schema } from "../../types/schema";
 import InputField from "../Input";
 import StyledButton from "../Button";
+import { validateForm } from "../../utils/validate";
 
 const FormBuilder = ({
   schema,
   submitButtonText,
   onSubmit,
+  formContainerStyles,
 }: {
   schema: Schema;
   submitButtonText?: string;
   onSubmit: (values: any) => void;
+  formContainerStyles?: React.CSSProperties;
 }) => {
   const [formState, setFormState] = useState<any>({});
+  const [errors, setErrors] = useState<Error[]>([]);
+  const [forceShowError, setForceShowError] = useState(false);
 
   useEffect(() => {
     setFormState((prev: any) => {
@@ -26,12 +31,21 @@ const FormBuilder = ({
     });
   }, []);
 
+  useEffect(() => {
+    setErrors(validateForm(formState, schema));
+  }, [formState]);
+
   return (
     <form
       onSubmit={(e) => {
         e.preventDefault();
-        onSubmit(formState);
+        if (errors.length) {
+          setForceShowError(true);
+        } else {
+          onSubmit(formState);
+        }
       }}
+      style={formContainerStyles}
     >
       {schema.fields.map((field) => {
         switch (field.type) {
@@ -39,9 +53,13 @@ const FormBuilder = ({
             return (
               <InputField
                 {...field.inputProps}
+                error={!!errors.filter((er) => er.name === field.name).length}
+                forceShowError={forceShowError}
+                errors={errors
+                  .filter((er) => er.name === field.name)
+                  .map((er) => er.message)}
                 label={field.label}
                 name={field.name}
-                required
                 value={formState[field.name]}
                 onChange={(e) =>
                   setFormState((prev: any) => ({

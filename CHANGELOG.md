@@ -1,5 +1,17 @@
 # react-form-builder
 
+## 1.2.0
+
+### Minor Changes
+
+- Add error handeling
+
+## 1.1.0
+
+### Minor Changes
+
+- Add support for form container styles and error messages
+
 ## 1.0.4
 
 ### Patch Changes
