@@ -1,3 +1,1 @@
-export const add = (x: number, y: number) => {
-  return x + y;
-};
+export { default as FormBuilder } from "./components/FormBuilder";
