@@ -14,9 +14,9 @@ export interface Field {
   type: "input" | "textarea" | "dropdown" | "checkbox" | "radio";
   initialValue?: string | number | boolean;
   label: string;
-  required: boolean;
+  required?: boolean;
   validations?: FieldValidations;
-  inputProps: InputHTMLAttributes<HTMLInputElement | HTMLTextAreaElement>;
+  inputProps?: InputHTMLAttributes<HTMLInputElement | HTMLTextAreaElement>;
 }
 
 export interface Schema {

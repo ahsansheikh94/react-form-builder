@@ -1,6 +1,6 @@
 {
-  "name": "react-form-builder",
-  "version": "1.0.0",
+  "name": "react-form-builder-sl",
+  "version": "1.0.4",
   "description": "",
   "main": "dist/index.js",
   "module": "dist/index.mjs",

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Schema } from "../../types/schema";
 import InputField from "../Input";
 import StyledButton from "../Button";
@@ -14,12 +14,17 @@ const FormBuilder = ({
 }) => {
   const [formState, setFormState] = useState<any>({});
 
-  schema.fields.map((field) =>
-    setFormState((prev: any) => ({
-      ...prev,
-      [field.name]: field.initialValue || "",
-    }))
-  );
+  useEffect(() => {
+    setFormState((prev: any) => {
+      const newState = prev;
+
+      schema.fields.map((field) => {
+        newState[field.name] = field.initialValue || "";
+      });
+
+      return newState;
+    });
+  }, []);
 
   return (
     <form
@@ -46,6 +51,8 @@ const FormBuilder = ({
                 }
               />
             );
+          default:
+            return null;
         }
       })}
       <StyledButton type="submit">{submitButtonText || "Submit"}</StyledButton>

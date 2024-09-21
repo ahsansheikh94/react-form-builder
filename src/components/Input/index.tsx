@@ -16,6 +16,7 @@ const InputField = ({
 
   return (
     <div className="input-container">
+      <label className={`label`}>{label}</label>
       <input
         {...props}
         type={type}
@@ -24,7 +25,6 @@ const InputField = ({
         onBlur={() => setIsFocused(false)}
         placeholder={placeholder}
       />
-      <label className={`label ${isFocused ? "focused" : ""}`}>{label}</label>
     </div>
   );
 };
